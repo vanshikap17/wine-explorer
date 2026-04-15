@@ -1,10 +1,10 @@
 /**
  * api.js
  * Handles all communication with the Google Gemini API.
- * Uses gemini-2.0-flash — free tier, large context window, no token issues.
+ * Uses gemini-1.5-flash — free tier, large context window, no token issues.
  */
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 /**
  * Builds the system prompt grounded in the wine dataset.
