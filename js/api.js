@@ -1,16 +1,13 @@
 /**
  * api.js
- * Handles all communication with the Groq API.
- * Uses llama-3.3-70b-versatile as the underlying model.
+ * Handles all communication with the Google Gemini API.
+ * Uses gemini-2.0-flash — free tier, large context window, no token issues.
  */
 
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.1-8b-instant';
-const MAX_TOKENS = 600;
-const TEMPERATURE = 0.3;
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 /**
- * Builds the system prompt that grounds the LLM in our wine dataset.
+ * Builds the system prompt grounded in the wine dataset.
  * @returns {string}
  */
 function buildSystemPrompt() {
@@ -30,40 +27,35 @@ function buildSystemPrompt() {
     volume_ml: w.volume,
   }));
 
-  return `You are a knowledgeable wine sommelier assistant for a wine shop. You have access to our complete inventory below and must answer customer questions based ONLY on this dataset. Do not invent wines, prices, or scores not present in the data.
-
-Guidelines:
-- Be conversational, helpful, and specific.
-- When recommending wines, mention the name, producer, price, and critic score.
-- Keep answers concise but complete (2–5 sentences for simple questions, a short ranked list for recommendation questions).
-- If a question cannot be answered from the data, say so honestly.
-- Do not make up facts.
+  return `You are a knowledgeable wine sommelier assistant for a wine shop. Answer customer questions based ONLY on this inventory. Do not invent wines, prices, or scores not in the data. Be conversational and concise. When recommending wines mention the name, producer, price, and score.
 
 WINE INVENTORY (${WINES.length} bottles):
-${JSON.stringify(inventory, null, 2)}`;
+${JSON.stringify(inventory)}`;
 }
 
 /**
- * Sends a question to the Groq API and returns the assistant's reply.
- * @param {string} question - The user's question
- * @param {string} apiKey - The Groq API key
- * @returns {Promise<string>} - The answer text
+ * Sends a question to the Gemini API and returns the answer.
+ * @param {string} question
+ * @param {string} apiKey - Google Gemini API key
+ * @returns {Promise<string>}
  */
 async function askGroq(question, apiKey) {
-  const response = await fetch(GROQ_API_URL, {
+  const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      temperature: TEMPERATURE,
-      messages: [
-        { role: 'system', content: buildSystemPrompt() },
-        { role: 'user', content: question },
+      system_instruction: {
+        parts: [{ text: buildSystemPrompt() }]
+      },
+      contents: [
+        { role: 'user', parts: [{ text: question }] }
       ],
+      generationConfig: {
+        maxOutputTokens: 600,
+        temperature: 0.3,
+      }
     }),
   });
 
@@ -73,5 +65,5 @@ async function askGroq(question, apiKey) {
   }
 
   const data = await response.json();
-  return data.choices[0].message.content.trim();
+  return data.candidates[0].content.parts[0].text.trim();
 }
