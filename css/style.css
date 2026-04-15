@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Rubik', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0d0d0d;
+  color: #f0f0f0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #fff;
+}
+
+.header p {
+  font-size: 0.95rem;
+  color: #888;
+  margin-top: 0.4rem;
+}
+
+/* ── Main card ── */
+.main-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 680px;
+}
+
+/* ── removed API key section ── */
+
+.api-input-row button {
+  background: #c8a96e;
+  color: #0d0d0d;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.api-input-row button:hover {
+  opacity: 0.85;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #2a2a2a;
+  margin: 1.5rem 0;
+}
+
+/* ── Question display ── */
+.question-display {
+  min-height: 48px;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.2s;
+}
+
+.question-display.listening {
+  border-color: #e05555;
+  color: #fff;
+}
+
+.question-display .placeholder {
+  color: #444;
+}
+
+/* ── Text input ── */
+.text-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.text-input-row input {
+  flex: 1;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  color: #f0f0f0;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.text-input-row input:focus {
+  border-color: #c8a96e;
+}
+
+/* ── Controls ── */
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-mic {
+  flex: 1;
+  min-width: 120px;
+  background: #1e1e1e;
+  border: 1.5px solid #333;
+  border-radius: 12px;
+  padding: 0.85rem;
+  color: #f0f0f0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.btn-mic:hover {
+  border-color: #555;
+  background: #222;
+}
+
+.btn-mic.recording {
+  border-color: #e05555;
+  background: #1e1212;
+  color: #e05555;
+}
+
+.btn-ask {
+  flex: 2;
+  min-width: 160px;
+  background: #c8a96e;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem;
+  color: #0d0d0d;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-ask:hover {
+  opacity: 0.85;
+}
+
+.btn-ask:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Answer section ── */
+.answer-section {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 1.2rem;
+  min-height: 80px;
+  display: none;
+  margin-bottom: 1rem;
+}
+
+.answer-section.visible {
+  display: block;
+}
+
+.answer-label {
+  font-size: 0.75rem;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-speak {
+  background: none;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  color: #888;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-speak:hover {
+  border-color: #c8a96e;
+  color: #c8a96e;
+}
+
+.answer-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #ddd;
+  white-space: pre-wrap;
+}
+
+/* ── Loading dots ── */
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  background: #c8a96e;
+  border-radius: 50%;
+  animation: dot-bounce 1.2s infinite;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── Status bar ── */
+.status-bar {
+  font-size: 0.8rem;
+  color: #555;
+  text-align: center;
+  min-height: 1.2em;
+  margin-bottom: 1.5rem;
+}
+
+.status-bar.error { color: #e05555; }
+.status-bar.success { color: #5ec46a; }
+
+/* ── Example chips ── */
+.examples-label {
+  font-size: 0.78rem;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+}
+
+.example-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 20px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.82rem;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip:hover {
+  border-color: #c8a96e;
+  color: #c8a96e;
+}
